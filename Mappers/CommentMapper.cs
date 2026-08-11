@@ -18,7 +18,9 @@ namespace api.Mappers
                 Title = CM.Title,
                 Content = CM.Content,
                 CreatedOn = CM.CreatedOn,
+                CreatedBy = CM.AppUser.UserName,
                 StockId = CM.StockId
+
             };
         }
 
