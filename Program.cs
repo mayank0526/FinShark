@@ -82,7 +82,7 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidIssuer = builder.Configuration["JWT:Issuer"],
         ValidateAudience = true,
-        ValidAudience = builder.Configuration["JWT:Audeince"], //"http://localhost:5210",
+        ValidAudience = builder.Configuration["JWT:Audience"], //"http://localhost:5210",
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
             System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
@@ -96,6 +96,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IStockRepo, StockRepository>();
 builder.Services.AddScoped<ICommentRepo, CommentRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPortfolioRepo, PortfolioRepository>();
 
 
 var app = builder.Build();

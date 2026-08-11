@@ -13,9 +13,9 @@ namespace api.Service
 {
     public class TokenService : ITokenService
     {
-private readonly IConfiguration CG;
-private readonly SymmetricSecurityKey _key;
-        public TokenService (IConfiguration config)
+        private readonly IConfiguration CG;
+        private readonly SymmetricSecurityKey _key;
+        public TokenService(IConfiguration config)
         {
             CG = config;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(CG["JWT:SigningKey"]));
@@ -29,24 +29,24 @@ private readonly SymmetricSecurityKey _key;
                 new Claim(JwtRegisteredClaimNames.GivenName,user.UserName)
         };
 
-        
-        var creds = new SigningCredentials( _key, SecurityAlgorithms.HmacSha512Signature);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-        Subject = new ClaimsIdentity(claims),
-        Expires = DateTime.Now.AddDays(7),
-        SigningCredentials = creds,
-        Issuer = CG["Jwt:Issuer"],
-        Audience = CG["Jwt:Audience"]
 
-    };
+            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(7),
+                SigningCredentials = creds,
+                Issuer = CG["Jwt:Issuer"],
+                Audience = CG["Jwt:Audience"]
 
-    var tokenHandler = new JwtSecurityTokenHandler();
+            };
 
-    var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler();
 
-    return tokenHandler.WriteToken(token);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
-}
-}
+            return tokenHandler.WriteToken(token);
+
+        }
+    }
 }
