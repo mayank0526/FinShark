@@ -10,5 +10,7 @@ namespace api.Models
     {
         public List<Portfolio> portfolios {get; set; } = new List<Portfolio>();
 
+        public List<Watchlist> watchlists {get; set; } = new List<Watchlist>();
+
     }
 }

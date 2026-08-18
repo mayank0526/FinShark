@@ -19,22 +19,36 @@ namespace api.Data
 
         public DbSet<Portfolio> portfolios {get; set; }
 
+        public DbSet<Watchlist> watchlists {get; set; }
+ 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<Portfolio>(x=> x.HasKey(p=> new {p.AppUserId, p.StockId}));
-
+ 
             builder.Entity<Portfolio>()
             .HasOne(u=> u.AppUser)
             .WithMany(u=> u.portfolios)
             .HasForeignKey(p=> p.AppUserId);
-
+ 
             builder.Entity<Portfolio>()
             .HasOne(u=> u.Stock)
             .WithMany(u=> u.portfolios)
             .HasForeignKey(p=> p.StockId);
 
-            
+            builder.Entity<Watchlist>(x => x.HasKey(p => new { p.AppUserId, p.StockId }));
+
+            builder.Entity<Watchlist>()
+            .HasOne(u => u.AppUser)
+            .WithMany(u => u.watchlists)
+            .HasForeignKey(p => p.AppUserId);
+
+            builder.Entity<Watchlist>()
+            .HasOne(u => u.Stock)
+            .WithMany(u => u.watchlists)
+            .HasForeignKey(p => p.StockId);
+ 
+             
             List<IdentityRole> roles = new List<IdentityRole>
             {
                 new IdentityRole {

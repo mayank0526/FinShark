@@ -34,8 +34,8 @@ namespace api.Controllers
             return BadRequest(ModelState);
             
             var stocks = await SR.GetAllAysnc(query);
-            var ss = stocks.Select(s => s.ToStockDto()).ToList();
-            return Ok(stocks);
+            var stockDtos = stocks.Select(s => s.ToStockDto()).ToList();
+            return Ok(stockDtos);
         }
 
 
